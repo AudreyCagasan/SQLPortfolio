@@ -1,0 +1,56 @@
+/* Creating a book list database for favorite books and their ratings*/
+
+CREATE TABLE Book_List
+(ID INT PRIMARY KEY,
+Name VARCHAR(75),
+Rating INT);
+
+
+INSERT INTO Book_List VALUES
+(1, "Lore Olympus", 7),
+(2, "Catching Fire", 8),
+(3, "The Adventure Zone: The Eleventh Hour", 10),
+(4, "Tokyo Revengers", 7),
+(5, "Fruit's Basket", 6),
+(6, "Chainsaw Man", 8),
+(7, "Attack on Titan", 10),
+(8, "The Ruined King", 8),
+(9, "Hunter X Hunter", 9),
+(10, "Smashed", 10);
+
+SELECT * FROM Book_List;
+
+/* Creating a store database */
+
+CREATE TABLE Store
+(ID_No INT PRIMARY KEY,
+ProductName VARCHAR(60),
+ProductType VARCHAR(60),
+ProductionCost INT,
+Price INT);
+
+
+INSERT INTO Store VALUES 
+(1, "Scrunchie", "Accessories", 3, 5),
+(2, "Beanie", "Accessories", 5, 9),
+(3, "Sunglasses", "Accessories", 12, 20),
+(4, "Sticker", "Stationary", 1, 3),
+(5, "Planner", "Stationary", 10, 20),
+(6, "Multicolor Pen", "Stationary", 2, 4),
+(7, "Character Pen", "Stationary", 3, 5),
+(8, "Sticky Notes", "Stationary", 2, 5),
+(9, "Purses", "Accessories", 17, 30),
+(10, "Skirts", "Clothing", 8, 15),
+(11, "Cardigans", "Clothing", 18, 30),
+(12, "Animal Eraser", "Stationary", 1, 2),
+(13, "Hair Clip", "Accessories", 1, 2),
+(14, "Calligraphy Pen", "Stationary", 1, 3),
+(15, "T-shirts", "Clothing", 12, 30);
+
+/* Aggregate functions to pull data from the Store database */
+
+SELECT COUNT(id_no) FROM Store; /* Number of products in store */
+SELECT AVG(ProductionCost) FROM Store; /* Average production cost of all products */
+SELECT ProductName, MAX(ProductionCost) FROM Store; /* Most expensive production cost */
+SELECT * FROM Store WHERE ProductionCost <= 5 ORDER BY ProductionCost DESC; /* Find products that have a production cost of under $5, sorted by greatest to least */
+SELECT * FROM Store ORDER BY ProductType, ProductName; /*Return all products in the store sorted first by Product Type alphabetically then Product name alphabetically */
