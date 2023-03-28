@@ -18,7 +18,7 @@ INSERT INTO Book_List VALUES
 (9, "Hunter X Hunter", 9),
 (10, "Smashed", 10);
 
-SELECT * FROM Book_List;
+SELECT * FROM Book_List; /* Displays entire table of database */
 
 /* Creating a store database */
 
@@ -49,8 +49,8 @@ INSERT INTO Store VALUES
 
 /* Aggregate functions to pull data from the Store database */
 
-SELECT COUNT(id_no) FROM Store; /* Number of products in store */
-SELECT AVG(ProductionCost) FROM Store; /* Average production cost of all products */
-SELECT ProductName, MAX(ProductionCost) FROM Store; /* Most expensive production cost */
+SELECT COUNT(id_no) AS Amount_Of_Products FROM Store; /* Number of products in store */
+SELECT AVG(ProductionCost) AS Average_Cost FROM Store; /* Average production cost of all products */
+SELECT ProductName, MAX(ProductionCost) AS Maximum_Cost FROM Store; /* Most expensive production cost */
 SELECT * FROM Store WHERE ProductionCost <= 5 ORDER BY ProductionCost DESC; /* Find products that have a production cost of under $5, sorted by greatest to least */
 SELECT * FROM Store ORDER BY ProductType, ProductName; /*Return all products in the store sorted first by Product Type alphabetically then Product name alphabetically */
