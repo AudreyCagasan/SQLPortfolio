@@ -166,6 +166,11 @@ SELECT Type_2, COUNT(Type_2) AS Type2Amount
 SELECT Name, Type_1, Type_2 FROM pokemon
     GROUP BY Number
     HAVING Type_1 = 'Water' AND Type_2 LIKE '%ic%';
+    
+/* Finding Water Type Pokemon That Has A Secondary Type */    
+SELECT Name, Type_1, Type_2 FROM pokemon
+    GROUP BY Number
+    HAVING Type_1 = "Water" AND Type_2 is NOT NULL;
 
 /* Finding Pokemon Types That Have An Amount Greater Than 5 and Less Than 10 */
 SELECT Type_1, COUNT(*) AS PokemonPerType FROM pokemon
