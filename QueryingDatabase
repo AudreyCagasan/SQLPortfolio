@@ -1,5 +1,5 @@
 /* Using database from Khan Academy's Data Sets with over 100 data sets
-In this, I practiced querying data using aggregate functions, CASE, HAVING, LIKE, WHERE, AND/OR functions, GROUP BY. */
+In this, I practiced querying data using aggregate functions, aliasing, CASE, HAVING, LIKE, WHERE, AND/OR functions, GROUP BY. */
 
 CREATE TABLE pokemon(
   Number     INTEGER,
