@@ -1,3 +1,5 @@
+/* In this project, I created tables, inserted data into each, and used aggregate functions. I used MIN, MAX, COUNT, AVERAGE aggregate functions, and I also used WHERE, ORDER BY, and aliasing. */
+
 /* Creating a book list table for favorite books and their ratings*/
 
 CREATE TABLE Book_List
@@ -54,6 +56,9 @@ SELECT COUNT(id_no) AS Amount_Of_Products FROM Store;
 
  /* Average production cost of all products */
 SELECT AVG(ProductionCost) AS Average_Cost FROM Store;
+
+/* Least expensive production cost */
+SELECT ProductName, MIN(ProductionCost) AS Minimum_Cost FROM Store; 
 
 /* Most expensive production cost */
 SELECT ProductName, MAX(ProductionCost) AS Maximum_Cost FROM Store; 
