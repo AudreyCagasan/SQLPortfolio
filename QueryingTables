@@ -143,7 +143,7 @@ SELECT Name AS RockTypePokemon
 SELECT Name AS WaterTypePokemon
     FROM pokemon WHERE Type_1 = 'Water' OR Type_2 = 'Water';
 
-/* Electric or Fighting Pokemon */
+/* Electric or Fighting Pokemon As Their Type_1 */
 SELECT Name AS ElectricOrFightingPokemon, Type_1
 FROM pokemon WHERE Type_1 = 'Electric' OR Type_1 = 'Fighting';
 
