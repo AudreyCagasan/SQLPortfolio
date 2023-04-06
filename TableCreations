@@ -1,4 +1,4 @@
-/* Creating a book list database for favorite books and their ratings*/
+/* Creating a book list table for favorite books and their ratings*/
 
 CREATE TABLE Book_List
 (ID INT PRIMARY KEY,
@@ -20,7 +20,7 @@ INSERT INTO Book_List VALUES
 
 SELECT * FROM Book_List; /* Displays entire table of database */
 
-/* Creating a store database */
+/* Creating a store table*/
 
 CREATE TABLE Store
 (ID_No INT PRIMARY KEY,
@@ -49,8 +49,20 @@ INSERT INTO Store VALUES
 
 /* Aggregate functions to pull data from the Store database */
 
-SELECT COUNT(id_no) AS Amount_Of_Products FROM Store; /* Number of products in store */
-SELECT AVG(ProductionCost) AS Average_Cost FROM Store; /* Average production cost of all products */
-SELECT ProductName, MAX(ProductionCost) AS Maximum_Cost FROM Store; /* Most expensive production cost */
-SELECT * FROM Store WHERE ProductionCost <= 5 ORDER BY ProductionCost DESC; /* Find products that have a production cost of under $5, sorted by greatest to least */
-SELECT * FROM Store ORDER BY ProductType, ProductName; /*Return all products in the store sorted first by Product Type alphabetically then Product name alphabetically */
+/* Number of products in store */
+SELECT COUNT(id_no) AS Amount_Of_Products FROM Store; 
+
+ /* Average production cost of all products */
+SELECT AVG(ProductionCost) AS Average_Cost FROM Store;
+
+/* Most expensive production cost */
+SELECT ProductName, MAX(ProductionCost) AS Maximum_Cost FROM Store; 
+
+/* Find products that have a production cost of under $5, sorted by greatest to least */
+SELECT * FROM Store 
+  WHERE ProductionCost <= 5 
+  ORDER BY ProductionCost DESC; 
+  
+ /*Return all products in the store sorted first by Product Type alphabetically then Product name alphabetically */
+SELECT * FROM Store 
+  ORDER BY ProductType, ProductName;
