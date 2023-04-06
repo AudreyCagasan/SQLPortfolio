@@ -1,0 +1,111 @@
+/* Creating a SQL database based on the app WaterLlama */
+/* Table for each user of the app */
+CREATE TABLE users
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+    purchased_amt INTEGER,
+    days_used INTEGER
+    );
+
+/* Table to track hydration */    
+CREATE TABLE hydration
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    drink TEXT,
+    fl_oz INTEGER,
+    date TEXT
+    );
+
+/* Table to track donations and which users have donated */
+CREATE TABLE donations
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    amount INTEGER
+    );
+
+/* Inserting data into users tables */    
+INSERT INTO users (purchased_amt, days_used) VALUES (0, 75);
+INSERT INTO users (purchased_amt, days_used) VALUES (3, 100);
+INSERT INTO users (purchased_amt, days_used) VALUES (6, 10);
+INSERT INTO users (purchased_amt, days_used) VALUES (3, 50);
+INSERT INTO users (purchased_amt, days_used) VALUES (0, 365);
+
+/* Inserting data into hydration table */
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (1, "water", 17, "01-20-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (1, "water", 5, "01-20-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (1, "water", 32, "01-25-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (2, "water", 17, "12-20-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (2, "water", 60, "12-20-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (2, "water", 32, "12-21-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (2, "tea", 12, "12-21-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (2, "coffee", 16, "12-21-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (2, "water", 60, "12-21-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (3, "water", 17, "03-24-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (3, "milk", 4, "03-24-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (3, "coffee", 16, "03-24-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (3, "water", 32, "03-24-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (3, "water", 17, "03-24-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (3, "smoothie", 16, "03-24-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (4, "smoothie", 16, "02-14-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (4, "water", 64, "02-14-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (4, "coffee", 16, "02-14-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (4, "water", 64, "02-14-2023");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (5, "water", 64, "04-01-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (5, "water", 64, "05-14-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (5, "water", 64, "06-22-2022");
+INSERT INTO hydration (user_id, drink, fl_oz, date) VALUES (5, "water", 64, "07-04-2022");
+
+/* Data for donations */
+INSERT INTO donations (user_id, amount) VALUES (1, 5);
+INSERT INTO donations (user_id, amount) VALUES (1, 3);
+INSERT INTO donations (user_id, amount) VALUES (1, 1);
+INSERT INTO donations (user_id, amount) VALUES (1, 5);
+INSERT INTO donations (user_id, amount) VALUES (3, 10);
+INSERT INTO donations (user_id, amount) VALUES (3, 15);
+INSERT INTO donations (user_id, amount) VALUES (4, 5);
+
+SELECT * FROM users;
+SELECT * FROM hydration
+    ORDER BY user_id;
+SELECT * FROM donations;
+
+/*Using SELECT then UPDATING row after confirmed the correct row is selected */
+SELECT id, days_used FROM users
+    WHERE id = 5;
+UPDATE users SET days_used = 367
+    WHERE id = 5;
+    
+SELECT * FROM users;
+
+/* Incorrect numbers were put in by fourth user for fluid ounces */
+SELECT * FROM hydration
+    WHERE user_id = 4;
+SELECT * FROM hydration
+    WHERE user_id = 4 AND id > 17;
+
+UPDATE hydration SET fl_oz = 12
+    WHERE id = 18;
+UPDATE hydration SET fl_oz = 80
+    WHERE id = 19;
+    
+SELECT * FROM hydration
+    WHERE user_id = 4;
+
+/*The fifth user deleted the app and the phone deleted the data with it*/
+SELECT * FROM users
+    WHERE id = 5;
+DELETE FROM users WHERE id = 5;
+
+SELECT * FROM users;
+
+/*Using JOINS*/
+SELECT users.id, h.drink, h.fl_oz, h.date FROM users
+    JOIN hydration h
+    ON users.id = h.user_id
+    WHERE date LIKE "%2023%"
+    ORDER BY date;
+
+SELECT * FROM users
+    JOIN hydration h
+    ON users.id = h.user_id
+    JOIN donations d
+    on users.id = d.user_id;
