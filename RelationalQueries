@@ -1,0 +1,89 @@
+/* Creating relational queries through JOIN */
+
+/* Creating a table for artists */
+CREATE TABLE artists
+    (id INTEGER PRIMARY KEY,
+    name TEXT,
+    start_date INTEGER,
+    country_origin TEXT
+    );
+    
+INSERT INTO artists VALUES (1, "BlackPink", 2016, "Korea");
+INSERT INTO artists VALUES (2, "Twice", 2015, "Korea");
+INSERT INTO artists VALUES (3, "New Jeans", 2022, "Korea");
+INSERT INTO artists VALUES (4, "LE SSERAFIM", 2022, "Korea");
+INSERT INTO artists VALUES (5, "NIKI", 2017, "Indonesia");
+INSERT INTO artists VALUES (6, "LiSA", 2010, "Japan");
+
+
+/* Table for songs of each artist */
+CREATE TABLE songs
+    (id INTEGER PRIMARY KEY,
+    artist_id INTEGER,
+    song_name TEXT
+    );
+
+INSERT INTO songs VALUES (1, 1, "Pink Venom");
+INSERT INTO songs VALUES (2, 1, "Kill This Love");
+INSERT INTO songs VALUES (3, 1, "Whistle");
+INSERT INTO songs VALUES (4, 2, "The Feels");
+INSERT INTO songs VALUES (5, 2, "Talk That Talk");
+INSERT INTO songs VALUES (6, 2, "I CAN'T STOP ME");
+INSERT INTO songs VALUES (7, 3, "Ditto");
+INSERT INTO songs VALUES (8, 3, "OMG");
+INSERT INTO songs VALUES (9, 3, "Attention");
+INSERT INTO songs VALUES (10, 4, "FEARLESS");
+INSERT INTO songs VALUES (11, 4, "ANTIFRAGILE");
+INSERT INTO songs VALUES (12, 4, "Sour Grapes");
+INSERT INTO songs VALUES (13, 5, "High School in Jakarta");
+INSERT INTO songs VALUES (14, 5, "lowkey");
+INSERT INTO songs VALUES (15, 5, "Every Summertime");
+INSERT INTO songs VALUES (16, 6, "Crossing Fields");
+INSERT INTO songs VALUES (17, 6, "Oath Sign");
+INSERT INTO songs VALUES (18, 6, "Gurenge");
+
+/* Table for Members of each artist */
+CREATE TABLE members
+    (id INTEGER PRIMARY KEY,
+    artist_id INTEGER,
+    name TEXT
+    );
+
+INSERT INTO members VALUES (1, 1, "Jennie");
+INSERT INTO members VALUES (2, 1, "Rose");
+INSERT INTO members VALUES (3, 1, "Jisoo");
+INSERT INTO members VALUES (4, 1, "Lisa");
+INSERT INTO members VALUES (5, 2, "Jihyo");
+INSERT INTO members VALUES (6, 2, "Momo");
+INSERT INTO members VALUES (7, 2, "Tzuyu");
+INSERT INTO members VALUES (8, 3, "Hyein");
+INSERT INTO members VALUES (9, 3, "Minji");
+INSERT INTO members VALUES (10, 3, "Danielle");
+INSERT INTO members VALUES (11, 3, "Hanni");
+INSERT INTO members VALUES (12, 3, "Haerin");
+INSERT INTO members VALUES (13, 4, "Chaewon");
+INSERT INTO members VALUES (14, 4, "Sakura");
+INSERT INTO members VALUES (15, 4, "Yunjin");
+INSERT INTO members VALUES (16, 4, "Kazuha");
+INSERT INTO members VALUES (17, 4, "Eunchae");
+INSERT INTO members VALUES (18, 5, "Nicole Zefanya");
+INSERT INTO members VALUES (19, 6, "Risa Oribe");
+INSERT INTO members VALUES (20, 2, "Jeongyeon");
+
+
+
+/* Checking data in each table */
+SELECT * FROM artists;
+SELECT * FROM songs;
+SELECT * from members;
+
+/* JOIN of artists table and songs table to list the songs made by each artist */
+SELECT artists.name, songs.song_name FROM artists
+    JOIN songs
+    ON artists.id = songs.artist_id;
+
+/* JOIN OF artists table and members table to list the members of each artist, organized availability */    
+SELECT artists.name, members.name FROM artists
+    JOIN members
+    ON artists.id = members.artist_id
+    ORDER BY artists.name;
