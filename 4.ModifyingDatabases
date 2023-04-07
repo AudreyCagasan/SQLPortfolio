@@ -10,9 +10,9 @@ CREATE TABLE users
 CREATE TABLE hydration
     (id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
-    drink TEXT,
+    drink VARCHAR(50),
     fl_oz INTEGER,
-    date TEXT
+    date VARCHAR(50)
     );
 
 /* Table to track donations and which users have donated */
