@@ -126,13 +126,27 @@ INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (99,'Kingler','Water',NULL,475,55,130,115,50,50,75,1,'False');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (100,'Voltorb','Electric',NULL,330,40,30,50,55,55,100,1,'False');
 
-/* Practicing Aggregate Functions Using WHERE */
+/* Aggregate Functions With GROUP BY */
+SELECT Type_1, MAX(HP) AS MaxHPBasedBEyType1
+    FROM pokemon
+    GROUP BY Type_1
+    ORDER BY Type_1;
+SELECT Type_1, MIN(HP) AS MinHPBasedBEyType1
+    FROM pokemon
+    GROUP BY Type_1
+    ORDER BY Type_1;
+SELECT Type_1, AVG(HP) AS AvgHPBasedBEyType1
+    FROM pokemon
+    GROUP BY Type_1
+    ORDER BY Type_1;
+
+/* Aggregate Functions Using WHERE */
 SELECT MAX(HP) AS MaxHPFromGhostType
     FROM pokemon WHERE Type_1 = "Ghost";
-SELECT MIN(HP) AS MinHPFromGhostType
-    FROM pokemon WHERE Type_1 = "Ghost";
-SELECT AVG(HP) AS AvgHPFromAllGhostTypes
-    FROM pokemon WHERE Type_1 = "Ghost";
+SELECT MIN(HP) AS MinHPFromFairyType
+    FROM pokemon WHERE Type_1 = "Fairy";
+SELECT AVG(HP) AS AvgHPFromAllFireTypes
+    FROM pokemon WHERE Type_1 = "Fire";
 
 /* Finding Only Rock Type Pokemon */
 SELECT Name AS RockTypePokemon
@@ -141,15 +155,17 @@ SELECT Name AS RockTypePokemon
     
 /* Finding Only Water Type Pokemon */
 SELECT Name AS WaterTypePokemon
-    FROM pokemon WHERE Type_1 = 'Water' OR Type_2 = 'Water';
+    FROM pokemon 
+    WHERE Type_1 = 'Water' OR Type_2 = 'Water';
 
 /* Electric or Fighting Pokemon As Their Type_1 */
 SELECT Name AS ElectricOrFightingPokemon, Type_1
-FROM pokemon WHERE Type_1 = 'Electric' OR Type_1 = 'Fighting';
+    FROM pokemon 
+    WHERE Type_1 = 'Electric' OR Type_1 = 'Fighting';
 
 /* Grass Pokemon With The Letter "O" In Their Name */
 SELECT Name AS GrassPokemonWithO, Number
-FROM pokemon 
+    FROM pokemon 
     WHERE Type_1 = 'Grass' AND Name LIKE '%o%';
 
 /* Counting the amount of Pokemon Under Each Type_1 */
@@ -167,7 +183,7 @@ SELECT Name, Type_1, Type_2 FROM pokemon
     GROUP BY Number
     HAVING Type_1 = 'Water' AND Type_2 LIKE '%ic%';
     
-/* Finding Water Type Pokemon That Has A Secondary Type */    
+/* Finding Water Type Pokemon That Have A Secondary Type */    
 SELECT Name, Type_1, Type_2 FROM pokemon
     GROUP BY Number
     HAVING Type_1 = "Water" AND Type_2 is NOT NULL;
