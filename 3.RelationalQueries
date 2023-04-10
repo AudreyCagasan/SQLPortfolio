@@ -5,7 +5,7 @@ CREATE TABLE artists
     (id INTEGER PRIMARY KEY,
     name varchar(50),
     start_date INTEGER,
-    country_origin TEXT
+    country_origin varchar(50)
     );
     
 INSERT INTO artists VALUES (1, "BlackPink", 2016, "Korea");
@@ -69,8 +69,11 @@ INSERT INTO members VALUES (17, 4, "Eunchae");
 INSERT INTO members VALUES (18, 5, "Nicole Zefanya");
 INSERT INTO members VALUES (19, 6, "Risa Oribe");
 INSERT INTO members VALUES (20, 2, "Jeongyeon");
-
-
+INSERT INTO members VALUES (21, 2, "Nayeon");
+INSERT INTO members VALUES (22, 2, "Sana");
+INSERT INTO members VALUES (23, 2, "Mina");
+INSERT INTO members VALUES (24, 2, "Dahyun");
+INSERT INTO members VALUES (25, 2, "Chaeyoung");
 
 /* Checking data in each table */
 SELECT * FROM artists;
