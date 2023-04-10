@@ -82,7 +82,7 @@ SELECT artists.name, songs.song_name FROM artists
     JOIN songs
     ON artists.id = songs.artist_id;
 
-/* JOIN OF artists table and members table to list the members of each artist, organized availability */    
+/* JOIN OF artists table and members table to list the members of each artist, organized alphabetically */    
 SELECT artists.name, members.name FROM artists
     JOIN members
     ON artists.id = members.artist_id
