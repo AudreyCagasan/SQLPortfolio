@@ -1,0 +1,199 @@
+/* This project focuses on creating relational queries through JOIN, PARTITION, UPDATE, ALTER, DELETE, CTE, Temp Tables, and VIEW. */
+
+/* Creating a table for artists */
+CREATE TABLE artists
+    (id INTEGER PRIMARY KEY,
+    name varchar(50),
+    start_date INTEGER,
+    country_origin varchar(50)
+    );
+    
+INSERT INTO artists VALUES (1, "BlackPink", 2016, "Korea");
+INSERT INTO artists VALUES (2, "Twice", 2015, "Korea");
+INSERT INTO artists VALUES (3, "New Jeans", 2022, "Korea");
+INSERT INTO artists VALUES (4, "LE SSERAFIM", 2022, "Korea");
+INSERT INTO artists VALUES (5, "NIKI", 2017, "Indonesia");
+INSERT INTO artists VALUES (6, "LiSA", 2010, "Japan");
+
+
+/* Table for songs of each artist */
+CREATE TABLE songs
+    (id INTEGER PRIMARY KEY,
+    artist_id INTEGER,
+    song_name varchar(50)
+    );
+
+INSERT INTO songs VALUES (1, 1, "Pink Venom");
+INSERT INTO songs VALUES (2, 1, "Kill This Love");
+INSERT INTO songs VALUES (3, 1, "Whistle");
+INSERT INTO songs VALUES (4, 2, "The Feels");
+INSERT INTO songs VALUES (5, 2, "Talk That Talk");
+INSERT INTO songs VALUES (6, 2, "I CAN'T STOP ME");
+INSERT INTO songs VALUES (7, 3, "Ditto");
+INSERT INTO songs VALUES (8, 3, "OMG");
+INSERT INTO songs VALUES (9, 3, "Attention");
+INSERT INTO songs VALUES (10, 4, "FEARLESS");
+INSERT INTO songs VALUES (11, 4, "ANTIFRAGILE");
+INSERT INTO songs VALUES (12, 4, "Sour Grapes");
+INSERT INTO songs VALUES (13, 5, "High School in Jakarta");
+INSERT INTO songs VALUES (14, 5, "lowkey");
+INSERT INTO songs VALUES (15, 5, "Every Summertime");
+INSERT INTO songs VALUES (16, 6, "Crossing Fields");
+INSERT INTO songs VALUES (17, 6, "Oath Sign");
+INSERT INTO songs VALUES (18, 6, "Gurenge");
+
+/* Table for Members of each artist */
+CREATE TABLE members
+    (id INTEGER PRIMARY KEY,
+    artist_id INTEGER,
+    name varchar(50)
+    );
+
+INSERT INTO members VALUES (1, 1, "Jennie");
+INSERT INTO members VALUES (2, 1, "Rose");
+INSERT INTO members VALUES (3, 1, "Jisoo");
+INSERT INTO members VALUES (4, 1, "Lisa");
+INSERT INTO members VALUES (5, 2, "Jihyo");
+INSERT INTO members VALUES (6, 2, "Momo");
+INSERT INTO members VALUES (7, 2, "Tzuyu");
+INSERT INTO members VALUES (8, 3, "Hyein");
+INSERT INTO members VALUES (9, 3, "Minji");
+INSERT INTO members VALUES (10, 3, "Danielle");
+INSERT INTO members VALUES (11, 3, "Hanni");
+INSERT INTO members VALUES (12, 3, "Haerin");
+INSERT INTO members VALUES (13, 4, "Chaewon");
+INSERT INTO members VALUES (14, 4, "Sakura");
+INSERT INTO members VALUES (15, 4, "Yunjin");
+INSERT INTO members VALUES (16, 4, "Kazuha");
+INSERT INTO members VALUES (17, 4, "Eunchae");
+INSERT INTO members VALUES (18, 5, "Nicole Zefanya");
+INSERT INTO members VALUES (19, 6, "Risa Oribe");
+INSERT INTO members VALUES (20, 2, "Jeongyeon");
+INSERT INTO members VALUES (21, 2, "Nayeon");
+INSERT INTO members VALUES (22, 2, "Sana");
+INSERT INTO members VALUES (23, 2, "Mina");
+INSERT INTO members VALUES (24, 2, "Dahyun");
+INSERT INTO members VALUES (25, 2, "Chaeyoung");
+
+/* Checking data in each table */
+SELECT * FROM artists;
+SELECT * FROM songs;
+SELECT * from members;
+
+/* JOIN of artists table and songs table to list the songs made by each artist */
+SELECT artists.name, songs.song_name FROM artists
+    JOIN songs
+    ON artists.id = songs.artist_id;
+
+/* JOIN OF artists table and members table to list the members of each artist, organized alphabetically */    
+SELECT artists.name, members.name FROM artists
+    JOIN members
+    ON artists.id = members.artist_id
+    ORDER BY artists.name;
+   
+/* Retroactively wanting to add a new column for the songs table to include the length of time (in seconds for each song) */
+ALTER TABLE songs ADD lengthsec INTEGER;
+
+/* Updating the songs table with length of each song */
+UPDATE songs SET lengthsec = 186
+    WHERE id = 1;
+UPDATE songs SET lengthsec = 191
+    WHERE id = 2;
+UPDATE songs SET lengthsec = 231
+    WHERE id = 3;
+UPDATE songs SET lengthsec = 198
+    WHERE id = 4;
+UPDATE songs SET lengthsec = 177
+    WHERE id = 5;
+UPDATE songs SET lengthsec = 238
+    WHERE id = 6;
+UPDATE songs SET lengthsec = 186
+    WHERE id = 7;
+UPDATE songs SET lengthsec = 212
+    WHERE id = 8;
+UPDATE songs SET lengthsec = 178
+    WHERE id = 9;
+UPDATE songs SET lengthsec = 168
+    WHERE id = 10;
+UPDATE songs SET lengthsec = 184
+    WHERE id = 11;
+UPDATE songs SET lengthsec = 196
+    WHERE id = 12;
+UPDATE songs SET lengthsec = 219
+    WHERE id = 13;
+UPDATE songs SET lengthsec = 171
+    WHERE id = 14;
+UPDATE songs SET lengthsec = 216
+    WHERE id = 15;
+UPDATE songs SET lengthsec = 248
+    WHERE id = 16;
+UPDATE songs SET lengthsec = 251
+    WHERE id = 17;
+UPDATE songs SET lengthsec = 239
+    WHERE id = 18;    
+    
+/* Inserting Incorrect Data To Be Deleted */
+INSERT INTO songs VALUES (19, 1, "Bad Boy", 183);
+
+/* Displaying each artist with songs and then comparing the song to the amount of total songs by each artist */
+SELECT artists.name, songs.song_name, COUNT(songs.artist_id) OVER (PARTITION BY songs.artist_id) as TotalArtistsSongs
+	FROM songs
+    JOIN artists
+    	ON songs.artist_id = artists.id
+    ORDER BY artists.name;
+
+/* Creating CTE For Above Table*/
+WITH CTE_SongsAndTotal (ArtistName, SongName, TotalArtistsSongs) AS
+  (SELECT artists.name, songs.song_name, COUNT(songs.artist_id) OVER (PARTITION BY songs.artist_id) as TotalArtistsSongs
+	FROM songs
+    JOIN artists
+    	ON songs.artist_id = artists.id
+	)
+
+SELECT * FROM CTE_SongsAndTotal;
+
+/* Using a SELECT statement to make sure the correct data is selected before using DELETE function */
+SELECT * FROM songs
+    WHERE id = 19;
+    
+DELETE FROM songs WHERE id = 19;
+
+/* Creating temp table based on COUNT functions below */
+
+SELECT COUNT(*) AS CountMembersOfBlackPink
+	FROM members
+    WHERE artist_id = 1;
+SELECT COUNT(*) AS CountMembersOfTwice
+	FROM members
+    WHERE artist_id = 2;
+SELECT COUNT(*) AS CountMembersOfNewJeans
+	FROM members
+    WHERE artist_id = 3;    
+SELECT COUNT(*) AS CountMembersOfLESSERAFIM
+	FROM members
+    WHERE artist_id = 4;       
+SELECT COUNT(*) AS CountMembersOfNIKI
+	FROM members
+    WHERE artist_id = 5;   
+SELECT COUNT(*) AS CountMembersOfLiSA
+	FROM members
+    WHERE artist_id = 6; 
+
+DROP TABLE IF EXISTS #count_members
+CREATE TABLE #count_members 
+ (artist_id INTEGER PRIMARY KEY,
+  memberamt INTEGER
+ );
+
+INSERT INTO #count_members VALUES (1, 4);
+INSERT INTO #count_members VALUES (2, 9);
+INSERT INTO #count_members VALUES (3, 5);
+INSERT INTO #count_members VALUES (4, 5);
+INSERT INTO #count_members VALUES (5, 1);
+
+/* Creating a view if wanted to visualize data */
+CREATE VIEW SongAndCountSong AS 
+SELECT artists.name, songs.song_name, COUNT(songs.artist_id) OVER (PARTITION BY songs.artist_id) as TotalArtistsSongs
+	FROM songs
+    JOIN artists
+    	ON songs.artist_id = artists.id;
